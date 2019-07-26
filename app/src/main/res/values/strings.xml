@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pointless Wheel Spin!</string>
+    <string name="Spin_To_Win">Swipe to Spin!</string>
+    <string name="Upgrade_Btn">Upgrades</string>
+    <string name="Speed">Speed</string>
+    <string name="Numbers">Numbers</string>
+</resources>
