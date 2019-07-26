@@ -55,7 +55,7 @@ public class Activity2 extends AppCompatActivity {
         TextView textview2 = findViewById(R.id.textView9);
         float triangular = ((level*level)/2) + (level/2);
         textview2.setText((float) (10 - (silverspeed * 0.05) ) + "  Seconds");
-        goldGain = (NumScore / 1000) + triangular-1;
+        goldGain = (NumScore / 1000) + triangular;
         realnum = Realnum(goldGain);
 
         Button b1 = findViewById(R.id.button6);

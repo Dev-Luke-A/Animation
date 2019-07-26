@@ -315,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
                 knum = String.valueOf(((int) (f1 / 1000000000000L))) + "T";
             } else if (f1 < 1000000000000000000L && f1 > 999999999999999L) {
                 knum = String.valueOf(((int) (f1 / 1000000000000000L))) + "Qua";
+
             }else knum = "error";
 
         }
