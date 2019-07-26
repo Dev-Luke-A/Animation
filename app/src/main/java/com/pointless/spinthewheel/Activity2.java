@@ -39,17 +39,22 @@ public class Activity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
-        isAuto = MainActivity.misAuto;
+
         mPrefs = getSharedPreferences("data", Context.MODE_PRIVATE);
         Button Button1 = findViewById(R.id.button);
         wheel = mPrefs.getInt("wheel", 0);
         Button Button3 = findViewById(R.id.button3);
 
+        TextView textview5 = findViewById(R.id.textView3);
+        String realnum = Realnum(NumScore);
+        textview5.setText(realnum);
+        TextView textView4 = findViewById(R.id.textView4);
+        realnum = Realnum(GoldCoins);
+        textView4.setText(String.valueOf(realnum));
 
-
-        costsilverspeed = (int)Math.pow(silverspeed, 2);
+        costsilverspeed = (int)Math.pow(silverspeed, 3);
         goldnums = mPrefs.getInt("goldnums", 0);
-        String realnum = Realnum(costsilverspeed);
+        realnum = Realnum(costsilverspeed);
         Button1.setText("Upgrade: " + realnum + " silver coins");
 
         TextView textview2 = findViewById(R.id.textView9);
@@ -99,6 +104,13 @@ public class Activity2 extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Not enough coins", Toast.LENGTH_LONG).show();
         }
+        TextView textview5 = findViewById(R.id.textView3);
+        String realnum = Realnum(NumScore);
+        textview5.setText(realnum);
+        TextView textView4 = findViewById(R.id.textView4);
+        realnum = Realnum(GoldCoins);
+        textView4.setText(String.valueOf(realnum));
+
     }
 
     public void back(View view) {

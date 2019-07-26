@@ -319,6 +319,9 @@ public class MainActivity extends AppCompatActivity {
             }else knum = "error";
 
         }
+        if(knum.endsWith(".0")){
+          knum = knum.substring(knum.length()-2, knum.length());
+        }
         return knum;
     }
 
