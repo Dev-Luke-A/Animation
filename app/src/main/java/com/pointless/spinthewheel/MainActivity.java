@@ -356,15 +356,15 @@ public class MainActivity extends AppCompatActivity {
             knum = String.valueOf(f1);
         } else {
             if (f1 < 1000000 && f1 > 999) {
-                knum =  String.valueOf((int) (f1 / 1000)) + "."  +  String.valueOf( Math.floor(f1 % 10000)) +  "K";
+                knum =  String.valueOf((int) (f1 / 1000)) + "."  +  String.valueOf((((int) Math.floor(f1 % 10000))/100)) +  "K";
             } else if (f1 < 1000000000 && f1 > 999999) {
-                knum =  String.valueOf((int)(f1/1000000)) + "."  +  String.valueOf( Math.floor(f1 %10000000)) +  "M";
+                knum =  String.valueOf((int)(f1/1000000)) + "."  +  String.valueOf((( (int)Math.floor(f1 %10000000))/100)) +  "M";
             } else if (f1 < 1000000000000L && f1 > 999999999) {
-                knum =  String.valueOf(((int)(f1/1000000000))) +   "."  +   String.valueOf( Math.floor(f1 % 10000000000L)) +  "B";
+                knum =  String.valueOf(((int)(f1/1000000000))) +   "."  +   String.valueOf((( (int)Math.floor(f1 % 10000000000L))/100)) +  "B";
             } else if (f1 < 1000000000000000L && f1 > 999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000L))) +   "."  +   String.valueOf( Math.floor(f1 %10000000000000L)) + "T";
+                knum = String.valueOf(((int) (f1 / 1000000000000L))) +   "."  +   String.valueOf( (((int)Math.floor(f1 %10000000000000L))/100)) + "T";
             } else if (f1 < 10000000000000000L && f1 > 999999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000000L))) +   "."  +   String.valueOf( Math.floor(f1 % 10000000000000000L)) + "Qua";
+                knum = String.valueOf(((int) (f1 / 1000000000000000L))) +   "."  +   String.valueOf( (((int)Math.floor(f1 % 10000000000000000L))/100)) + "Qua";
 
             }else knum = "error";
 
