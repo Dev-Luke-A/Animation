@@ -48,11 +48,15 @@ public class MainActivity extends AppCompatActivity {
     int rotation;
     public static float GoldCoins;
     int number;
+    public static float v6;
+    public static float sc;
     public int wheel;
     public static int spins;
+    public static int pcoins;
     public static int speed = 10000;
     int numbers;
     SharedPreferences mPrefs;
+    int first;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mPrefs = getSharedPreferences("data", Context.MODE_PRIVATE);
-        spins = (mPrefs.getInt("spins", 0));
-        wheel = (mPrefs.getInt("wheel", 0));
+        spins = (mPrefs.getInt("spins", 100));
+        v6 = (mPrefs.getFloat("v6", 1));
+        sc = (mPrefs.getFloat("sc", 1));
+       // pcoins= (mPrefs.getInt("pcoins", 1));
+        pcoins = 10;
+        ImageView engine = findViewById(R.id.imageView5);
+        ImageView engine2 = findViewById(R.id.imageView8);
+        ImageView engine3 = findViewById(R.id.imageView9);
+
+        if(v6 == (float) 1.2) {
+            engine.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.v_6_engine));
+
+        }
+        if(sc == (float) 1.2) {
+            engine2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.scrooge1));
+
+        }
+
+        first = (mPrefs.getInt("first", 0));
+
+        if (first == 0){
+            first = 1;
+            SharedPreferences.Editor mEditor = mPrefs.edit();
+            mEditor.putInt("first", first).apply();
+            Intent intent = new Intent(getApplicationContext(), firstTime.class);
+            startActivity(intent);
+        }
+
+        wheel = (mPrefs.getInt("wheel",     1));
         if(wheel== 1){
             ImageView iv = findViewById(R.id.imageView);
 
@@ -84,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
             iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.wheelsix));
         }
         NumScore = (mPrefs.getFloat("silvercoins", 0));
-        GoldCoins = (mPrefs.getFloat("goldcoins", 0));
+        GoldCoins = (mPrefs.getFloat("goldcoins", 160));
 
         silvernumbers = (mPrefs.getInt("silvernumbers", 0));
         silverspeed = (mPrefs.getInt("silverspeed", 0));
         speed = (int) (10000 - ((silverspeed * 0.05) * 1000));
         costsilvernumbers = (int) Math.pow(8, silvernumbers);
-        coinvalue = Math.pow(2,level-1);
+
         TextView textview5 = findViewById(R.id.textView3);
         String realnum = Realnum(NumScore);
         textview5.setText(realnum);
@@ -101,9 +132,12 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageView imageview = (ImageView) findViewById(R.id.imageView);
         level = mPrefs.getInt("level", 1);
+        double pow = level -1;
+        coinvalue = Math.pow(2,pow);
+
         progress = (mPrefs.getInt("progress", 0));
         ProgressBar progressBar = findViewById(R.id.progressBar);
-        progressBar.setMax((int)(50 * Math.pow(level,2)));
+        progressBar.setMax((int)(50 * Math.pow(level,1.5)));
         progressBar.setProgress(progress);
         TextView textView = findViewById(R.id.textView);
         textView.setText(String.valueOf(level));
@@ -115,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         ImageView imageview = (ImageView) findViewById(R.id.imageView);
         float pivotY = imageview.getHeight() / 2 + 3;
         float pivotX = imageview.getWidth() / 2 + 3;
@@ -125,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         Animation clockwiserotate = new RotateAnimation(lastangle == -1 ? 360 : lastangle, lastangle + clockwiseangle, pivotX, pivotY);
         Animation anticlockwiserotate = new RotateAnimation(lastangle == -1 ? 0 : lastangle, lastangle - anticlockwiseangle, pivotX, pivotY);
         final TextView textView = findViewById(R.id.textView);
-        clockwiserotate.setDuration(speed);
+        clockwiserotate.setDuration((long)(speed/v6));
         clockwiserotate.setFillAfter(true);
         anticlockwiserotate.setDuration(speed);
         anticlockwiserotate.setFillAfter(true);
@@ -201,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 textView2.setText(realnum);
                 SharedPreferences.Editor mEditor = mPrefs.edit();
                 ProgressBar progressBar = findViewById(R.id.progressBar);
-                float lv = (number * (GoldCoins+1));
+                float lv = (number * (1+(GoldCoins)/100));
                 while (progressBar.getProgress() + lv >= progressBar.getMax()) {
                     int prog =  progressBar.getProgress();
                     lv = lv -  (progressBar.getMax()-prog);
@@ -209,10 +244,11 @@ public class MainActivity extends AppCompatActivity {
                     progressBar.setProgress(0);
                     TextView textView = findViewById(R.id.textView);
                        textView.setText(String.valueOf(level));
+                       double pow = level -1;
+                    coinvalue = Math.pow(2,pow);
+                    progressBar.setMax((int)(50 * Math.pow(level,1.5)));
 
-                    coinvalue = Math.pow(2,level-1);
-                    progressBar.setMax((int)(50 * Math.pow(level,2)));
-                    NumScore = NumScore + (float) (Math.pow(level, 2));
+                   // NumScore = NumScore + (float) (Math.pow(level, 2));
                     realnum = Realnum(NumScore);
                     textView2.setText(realnum);
 
@@ -222,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
 //                textView.setText(progressBar.getProgress() + "/" + progressBar.getMax());
 
                 mEditor.putInt("spins", spins).apply();
+                mEditor.putInt("wheel", wheel).apply();
                 mEditor.putFloat("coinvalue", (float)coinvalue);
                 mEditor.putFloat("silvercoins", NumScore).apply();
                 mEditor.putInt("level", level).apply();
@@ -252,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
 
                 SharedPreferences.Editor mEditor = mPrefs.edit();
                 ProgressBar progressBar = findViewById(R.id.progressBar);
-                float lv = (number * (GoldCoins+1));
+                float lv = (number * (1+(GoldCoins)/100));
                 while (progressBar.getProgress() + lv >= progressBar.getMax()) {
                     int prog =  progressBar.getProgress();
                     lv = lv -  (progressBar.getMax()-prog);
@@ -260,9 +297,10 @@ public class MainActivity extends AppCompatActivity {
                     progressBar.setProgress(0);
                     TextView textView = findViewById(R.id.textView);
                        textView.setText(String.valueOf(level));
-                    coinvalue = Math.pow(2,level-1);
-                    progressBar.setMax((int)(50 * Math.pow(level,2)));
-                    NumScore = NumScore + (float) (Math.pow(level, 2));
+                    double pow = level -1;
+                    coinvalue = Math.pow(2,pow);
+                    progressBar.setMax((int)(50 * Math.pow(level,1.5)));
+                //    NumScore = NumScore + (float) (Math.pow(level, 2));
                     realnum = Realnum(NumScore);
                     textView2.setText(realnum);
 
@@ -272,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
 //                textView.setText(progressBar.getProgress() + "/" + progressBar.getMax());
 
                 mEditor.putInt("spins", spins).apply();
+                mEditor.putInt("wheel", wheel).apply();
                 mEditor.putFloat("coinvalue", (float)coinvalue);
                 mEditor.putFloat("silvercoins", NumScore).apply();
                 mEditor.putInt("level", level).apply();
@@ -299,28 +338,39 @@ public class MainActivity extends AppCompatActivity {
             finish();
         } else Toast.makeText(this, "Wait until wheel is finished", Toast.LENGTH_SHORT).show();
     }
+    public void crates(View view) {
+        if (!(anim == 1) || isAuto) {
+            if (!isAuto){misAuto = false;
+            }else misAuto = true;
+            Intent intent = new Intent(this, CrateActivity.class);
+            intent.putExtra(String.valueOf(speed), speed);
+            intent.putExtra(String.valueOf(numbers), numbers);
+            startActivity(intent);
+            finish();
+        } else Toast.makeText(this, "Wait until wheel is finished", Toast.LENGTH_SHORT).show();
+    }
 
     public static String Realnum(float f1) {
         String knum;
         if (f1 < 999) {
-            knum = String.valueOf((int)f1);
+            knum = String.valueOf(f1);
         } else {
             if (f1 < 1000000 && f1 > 999) {
-                knum =  String.valueOf((int) (f1 / 1000)) + "K";
+                knum =  String.valueOf((int) (f1 / 1000)) + "."  +  String.valueOf( Math.floor(f1 % 10000)) +  "K";
             } else if (f1 < 1000000000 && f1 > 999999) {
-                knum =  String.valueOf((int)(f1/1000000)) + "M";
+                knum =  String.valueOf((int)(f1/1000000)) + "."  +  String.valueOf( Math.floor(f1 %10000000)) +  "M";
             } else if (f1 < 1000000000000L && f1 > 999999999) {
-                knum =  String.valueOf(((int)(f1/1000000000))) + "B";
+                knum =  String.valueOf(((int)(f1/1000000000))) +   "."  +   String.valueOf( Math.floor(f1 % 10000000000L)) +  "B";
             } else if (f1 < 1000000000000000L && f1 > 999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000L))) + "T";
+                knum = String.valueOf(((int) (f1 / 1000000000000L))) +   "."  +   String.valueOf( Math.floor(f1 %10000000000000L)) + "T";
             } else if (f1 < 10000000000000000L && f1 > 999999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000000L))) + "Qua";
+                knum = String.valueOf(((int) (f1 / 1000000000000000L))) +   "."  +   String.valueOf( Math.floor(f1 % 10000000000000000L)) + "Qua";
 
             }else knum = "error";
 
         }
         if(knum.endsWith(".0")){
-          knum = knum.substring(knum.length()-2, knum.length());
+          knum = knum.substring(0, knum.length()-2);
         }
         return knum;
     }

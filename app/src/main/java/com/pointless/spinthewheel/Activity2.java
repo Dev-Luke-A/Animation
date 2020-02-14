@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,22 +53,23 @@ public class Activity2 extends AppCompatActivity {
         realnum = Realnum(GoldCoins);
         textView4.setText(String.valueOf(realnum));
 
-        costsilverspeed = (int)Math.pow(silverspeed, 3);
+        costsilverspeed = (int)((Math.pow(silverspeed, 3) + 1)/MainActivity.sc);
         goldnums = mPrefs.getInt("goldnums", 0);
         realnum = Realnum(costsilverspeed);
-        Button1.setText("Upgrade: " + realnum + " silver coins");
+        Button1.setText("Upgrade speed:\n " + realnum + " silver coins");
 
         TextView textview2 = findViewById(R.id.textView9);
-        float triangular = ((level*level)/2) + (level/2);
+        float triangular = Math.round(((float)(level*level)/2) + level)-2 ;
         textview2.setText((float) (10 - (silverspeed * 0.05) ) + "  Seconds");
-        goldGain = (NumScore / 1000) + triangular;
+        goldGain = triangular;
         realnum = Realnum(goldGain);
 
         Button b1 = findViewById(R.id.button6);
         b1.setText("Reset for: " + String.valueOf(realnum) + " Gold coins");
         Button b3 = findViewById(R.id.button3);
-        upgcost =  Math.pow(((wheel+2)), 5);
-        b3.setText("Upgrade: " + upgcost + " Gold coins");
+        upgcost =   Math.pow(((wheel+2)), 3);
+        String real = Realnum((float)upgcost);
+        b3.setText("Upgrade wheel:\n " + real + " Gold coins");
     }
 
     public void silverspeedclick(View view) {
@@ -76,7 +78,7 @@ public class Activity2 extends AppCompatActivity {
         if (NumScore >= costsilverspeed) {
 
             if (silverspeed < 190) {
-                speed = speed - 20;
+                speed = speed - 5;
                 Button Button1 = findViewById(R.id.button);
 
                 Button Button3 = findViewById(R.id.button3);
@@ -85,7 +87,7 @@ public class Activity2 extends AppCompatActivity {
                 MainActivity.speed = speed;
                 NumScore = NumScore - costsilverspeed;
                 silverspeed++;
-                costsilverspeed = (int)Math.pow(silverspeed, 3);
+                costsilverspeed = (int)((Math.pow(silverspeed, 3) + 1)/MainActivity.sc);
 
 
                 mEditor.putInt("spins", spins).apply();
@@ -96,7 +98,7 @@ public class Activity2 extends AppCompatActivity {
                 mEditor.putFloat("goldcoins", gold).apply();
                 TextView textView13 = findViewById(R.id.textView9);
                 String realnum = Realnum(costsilverspeed);
-                Button1.setText("Upgrade: " + realnum + " silver coins");
+                Button1.setText("Upgrade speed:\n " + realnum + " silver coins");
                 textView13.setText((float) (10 - (silverspeed * 0.05)  ) + "  Seconds");
                 mEditor.putInt("speed", (int) speed);
             }
@@ -156,9 +158,10 @@ public class Activity2 extends AppCompatActivity {
          if(wheel == 1) wheel =7;
             if(wheel == 0)wheel++;
             gold = (float)(gold - upgcost);
-            upgcost =   Math.pow(((wheel+2)), 5);
+            upgcost =   Math.pow(((wheel+2)), 3);
             Button b3 = findViewById(R.id.button3);
-            b3.setText("Upgrade: " + upgcost + " Gold coins");
+            String real = Realnum((float)upgcost);
+            b3.setText("Upgrade wheel:\n " + real + " Gold coins");
                 SharedPreferences.Editor mEditor = mPrefs.edit();
                 mEditor.putFloat("goldcoins", gold).apply();
                 mEditor.putInt("wheel", wheel).apply();

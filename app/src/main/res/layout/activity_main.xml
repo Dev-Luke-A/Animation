@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    android:weightSum="6.1"
+
     tools:context=".MainActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.05"
+        android:layout_weight="1.1"
         android:orientation="horizontal"
         android:weightSum="4">
 
@@ -58,7 +58,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.15"
+        android:layout_weight="1.05"
         android:orientation="horizontal"
         android:weightSum="5.5">
 
@@ -75,8 +75,12 @@
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
+
+            android:maxHeight="20dp"
+            android:minHeight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:layout_weight="1"
             android:animationResolution="100"
             android:indeterminate="false"
@@ -109,20 +113,53 @@
         tools:layout_editor_absoluteX="109dp"
         tools:layout_editor_absoluteY="174dp" />
 
-    <Space
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.15" />
+        android:layout_weight="1.05"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.05" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.05"
+            />
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.05" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/Upgrade_Btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:background="#CC9FFFFF"
         android:longClickable="true"
         android:onClick="Upgrades"
         android:text="@string/Upgrade_Btn"
+        android:textSize="20sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:background="#CC9FAAFF"
+        android:longClickable="true"
+        android:onClick="crates"
+        android:text="Items"
         android:textSize="20sp"
         android:textStyle="italic" />
 

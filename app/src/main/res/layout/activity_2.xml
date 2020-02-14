@@ -63,23 +63,6 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#92ADB9"
-            android:onClick="wheelupgrade"
-            android:text="Upgrade wheel"
-            android:textSize="24sp" />
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -121,6 +104,23 @@
             android:background="#C1D1D8"
             android:onClick="resetForGold"
             android:text="Reset for gold"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#92ADB9"
+            android:onClick="wheelupgrade"
+            android:text="Upgrade wheel"
             android:textSize="24sp" />
     </LinearLayout>
 
