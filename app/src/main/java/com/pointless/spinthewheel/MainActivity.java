@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,18 +70,9 @@ public class MainActivity extends AppCompatActivity {
         sc = (mPrefs.getFloat("sc", 1));
        // pcoins= (mPrefs.getInt("pcoins", 1));
         pcoins = 10;
-        ImageView engine = findViewById(R.id.imageView5);
-        ImageView engine2 = findViewById(R.id.imageView8);
-        ImageView engine3 = findViewById(R.id.imageView9);
 
-        if(v6 == (float) 1.2) {
-            engine.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.v_6_engine));
 
-        }
-        if(sc == (float) 1.2) {
-            engine2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.scrooge1));
 
-        }
 
         first = (mPrefs.getInt("first", 0));
 
@@ -138,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
         progress = (mPrefs.getInt("progress", 0));
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setMax((int)(50 * Math.pow(level,1.5)));
-        progressBar.setProgress(progress);
+        setprog(progress);
+
         TextView textView = findViewById(R.id.textView);
         textView.setText(String.valueOf(level));
 
@@ -254,7 +247,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-                progressBar.incrementProgressBy((int)lv);
+                setprog(progressBar.getProgress() + (int)lv);
+//                progressBar.incrementProgressBy((int)lv);
 //                textView.setText(progressBar.getProgress() + "/" + progressBar.getMax());
 
                 mEditor.putInt("spins", spins).apply();
@@ -294,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
                     int prog =  progressBar.getProgress();
                     lv = lv -  (progressBar.getMax()-prog);
                     level++;
+
                     progressBar.setProgress(0);
                     TextView textView = findViewById(R.id.textView);
                        textView.setText(String.valueOf(level));
@@ -306,7 +301,8 @@ public class MainActivity extends AppCompatActivity {
 
 
                 }
-                progressBar.incrementProgressBy((int)lv);
+  //              progressBar.incrementProgressBy((int)lv);
+                setprog(progressBar.getProgress() + (int)lv);
 //                textView.setText(progressBar.getProgress() + "/" + progressBar.getMax());
 
                 mEditor.putInt("spins", spins).apply();
@@ -350,29 +346,16 @@ public class MainActivity extends AppCompatActivity {
         } else Toast.makeText(this, "Wait until wheel is finished", Toast.LENGTH_SHORT).show();
     }
 
-    public static String Realnum(float f1) {
-        String knum;
-        if (f1 < 999) {
-            knum = String.valueOf(f1);
+    public static String Realnum(float fl) {
+        char[] suffix = {' ', 'k', 'M', 'B', 'T', 'P', 'E'};
+        float numValue = fl;
+        int value = (int) Math.floor(Math.log10(numValue));
+        int base = value / 3;
+        if (value >= 3 && base < suffix.length) {
+            return new DecimalFormat("#0.00").format(numValue / Math.pow(10, base * 3)) + suffix[base];
         } else {
-            if (f1 < 1000000 && f1 > 999) {
-                knum =  String.valueOf((int) (f1 / 1000)) + "."  +  String.valueOf((((int) Math.floor(f1 % 10000))/100)) +  "K";
-            } else if (f1 < 1000000000 && f1 > 999999) {
-                knum =  String.valueOf((int)(f1/1000000)) + "."  +  String.valueOf((( (int)Math.floor(f1 %10000000))/100)) +  "M";
-            } else if (f1 < 1000000000000L && f1 > 999999999) {
-                knum =  String.valueOf(((int)(f1/1000000000))) +   "."  +   String.valueOf((( (int)Math.floor(f1 % 10000000000L))/100)) +  "B";
-            } else if (f1 < 1000000000000000L && f1 > 999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000L))) +   "."  +   String.valueOf( (((int)Math.floor(f1 %10000000000000L))/100)) + "T";
-            } else if (f1 < 10000000000000000L && f1 > 999999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000000L))) +   "."  +   String.valueOf( (((int)Math.floor(f1 % 10000000000000000L))/100)) + "Qua";
-
-            }else knum = "error";
-
+            return new DecimalFormat("#,##0").format(numValue);
         }
-        if(knum.endsWith(".0")){
-          knum = knum.substring(0, knum.length()-2);
-        }
-        return knum;
     }
 
     public void onBackPressed() {
@@ -381,6 +364,37 @@ public class MainActivity extends AppCompatActivity {
         } else Toast.makeText(this, "Wait until wheel is finished", Toast.LENGTH_SHORT).show();
     }
 
-}
+    public void setprog (final float prog) {
+        final ProgressBar pb = findViewById(R.id.progressBar);
+        Float cprog = (float) pb.getProgress();
+        Runnable runnable = new Runnable() {
+            long num = 600;
+            int min;
+            int sec;
+
+            @Override
+            public void run() {
+                try {
+                    for (int a = 1; a < 50; a++) {
+                        Thread.sleep(10);
+                        float av = pb.getProgress() + (prog - pb.getProgress()) / (50/a);
+                        pb.setProgress((int) av);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+            ;
+        };
+        Thread mthread = new Thread(runnable);
+        mthread.start();
+        }
+
+
+    }
+
+
 
 
