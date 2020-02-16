@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static double coinvalue = 1;
     public static int costsilverspeed = 1;
     MediaPlayer mediaPlayer;
+    MediaPlayer mps;
     public static float start;
     public static int costsilvernumbers = 1;
     public static int silverspeed;
@@ -72,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        mps = MediaPlayer.create(getApplicationContext(), R.raw.seven);
+        mps.setLooping(true);
+        mps.start();
 Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LENGTH_LONG).show();
         TextView tv = findViewById(R.id.textView7);
         tv.setTextColor(Color.rgb(50,205,50));
