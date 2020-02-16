@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,14 +26,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
+import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     public static double coinvalue = 1;
     public static int costsilverspeed = 1;
+    public static float start;
     public static int costsilvernumbers = 1;
     public static int silverspeed;
     public static int silvernumbers;
+    TextView mult;
+    public static double times = 1;
+    public static int d;
+     TextView adder;
     public static boolean isAuto = false;
     public static int costgoldspeed = 1;
     public static int costgoldnumbers = 1;
@@ -62,25 +71,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView tv = findViewById(R.id.textView7);
+        tv.setTextColor(Color.rgb(50,205,50));
+        String str = String.valueOf(times) + "X";
+        Double db = (double)times;
+       // tv.setText(String.format(Locale.CANADA, "%.2f", db) + "X");
+
+        adder = findViewById(R.id.textView6);
+        mult = findViewById(R.id.textView7);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mPrefs = getSharedPreferences("data", Context.MODE_PRIVATE);
-        spins = (mPrefs.getInt("spins", 100));
+        spins = (mPrefs.getInt("spins", 0));
         v6 = (mPrefs.getFloat("v6", 1));
         sc = (mPrefs.getFloat("sc", 1));
        // pcoins= (mPrefs.getInt("pcoins", 1));
         pcoins = 10;
-        ImageView engine = findViewById(R.id.imageView5);
-        ImageView engine2 = findViewById(R.id.imageView8);
-        ImageView engine3 = findViewById(R.id.imageView9);
 
-        if(v6 == (float) 1.2) {
-            engine.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.v_6_engine));
 
-        }
-        if(sc == (float) 1.2) {
-            engine2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.scrooge1));
 
-        }
 
         first = (mPrefs.getInt("first", 0));
 
@@ -138,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
         progress = (mPrefs.getInt("progress", 0));
         ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setMax((int)(50 * Math.pow(level,1.5)));
-        progressBar.setProgress(progress);
+        setprog(progress);
+
         TextView textView = findViewById(R.id.textView);
         textView.setText(String.valueOf(level));
 
@@ -171,6 +182,21 @@ public class MainActivity extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
                 float deltaX = x2 - x1;
+                if (anim == 1) {
+                    times = (times + 0.01);
+                    TextView tv = findViewById(R.id.textView7);
+
+                    String str = String.valueOf(times) + "X";
+                    Double db = (double)times;
+                    if (db > 1.24){
+                        tv.setTextColor(Color.rgb(255, 165, 0));
+                    }
+                    if (db > 1.39){
+                        tv.setTextColor(Color.RED);
+                    }
+                    tv.setText(String.format(Locale.CANADA, "%.2f", db) + "X");
+
+                }
                 if (deltaX > MIN_DISTANCE) {
                     if (anim == 0) {
                         if (!isAuto){
@@ -187,8 +213,10 @@ public class MainActivity extends AppCompatActivity {
                         if (225 <= rotation && rotation < 270) number = 6+wheel;
                         if (270 <= rotation && rotation < 315) number = 7+wheel;
                         if (315 <= rotation && rotation < 360) number = 8+wheel;
-                        NumScore = NumScore + (int) (number * coinvalue);
+
                             }else Toast.makeText(getApplicationContext(), "Auto spin is on", Toast.LENGTH_SHORT);
+                    }else{
+
                     }
 
 
@@ -210,11 +238,16 @@ public class MainActivity extends AppCompatActivity {
                         if (225 <= rotation && rotation < 270) number = 6 + wheel;
                         if (270 <= rotation && rotation < 315) number = 7 + wheel;
                         if (315 <= rotation && rotation < 360) number = 8 + wheel;
-                        NumScore = NumScore + (int) (number * coinvalue);
+
+
                         }else Toast.makeText(getApplicationContext(), "Auto spin is on", Toast.LENGTH_SHORT);
+                    }else{
+
                     }
                 } else {
-                    Toast.makeText(this, "Swipe the screen", Toast.LENGTH_SHORT).show();
+                    if (anim == 0) {
+                        Toast.makeText(this, "Swipe the screen", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 break;
@@ -222,6 +255,12 @@ public class MainActivity extends AppCompatActivity {
         clockwiserotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
+                start = NumScore;
+
+
+                TextView tv = findViewById(R.id.textView7);
+                tv.setTextColor(Color.rgb(50,205,50));
+                tv.setText("1.00X");
             }
 
             @Override
@@ -230,10 +269,31 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
+                NumScore = NumScore + (float) (((number * coinvalue))*times);
+                final TextView tv = findViewById(R.id.textView7);
+
+
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv.setText("");
+                        tv.setTextColor(Color.rgb(50,205,50));
+                        times = 1;
+                        Double db = (double)times;
+                       // tv.setText(String.format(Locale.CANADA, "%.2f", db) + "X");
+                        String str = String.valueOf(times) + "X";
+                    }
+                }, 1000);
+
                 anim = 0;
+
                 TextView textView2 = findViewById(R.id.textView3);
-                String realnum = Realnum(NumScore);
-                textView2.setText(realnum);
+                TextView textView3 = findViewById(R.id.textView6);
+                setvalue(start, NumScore);
+
+
                 SharedPreferences.Editor mEditor = mPrefs.edit();
                 ProgressBar progressBar = findViewById(R.id.progressBar);
                 float lv = (number * (1+(GoldCoins)/100));
@@ -249,12 +309,11 @@ public class MainActivity extends AppCompatActivity {
                     progressBar.setMax((int)(50 * Math.pow(level,1.5)));
 
                    // NumScore = NumScore + (float) (Math.pow(level, 2));
-                    realnum = Realnum(NumScore);
-                    textView2.setText(realnum);
 
 
                 }
-                progressBar.incrementProgressBy((int)lv);
+                setprog(progressBar.getProgress() + (int)lv);
+//                progressBar.incrementProgressBy((int)lv);
 //                textView.setText(progressBar.getProgress() + "/" + progressBar.getMax());
 
                 mEditor.putInt("spins", spins).apply();
@@ -273,6 +332,10 @@ public class MainActivity extends AppCompatActivity {
         anticlockwiserotate.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation arg0) {
+                start = NumScore;
+                TextView tv = findViewById(R.id.textView7);
+                tv.setTextColor(Color.rgb(50,205,50));
+                tv.setText("1.00X");
             }
 
             @Override
@@ -281,10 +344,32 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
+
+                NumScore = NumScore + (float) (((number * coinvalue))*times);
+
+
+                final TextView tv = findViewById(R.id.textView7);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv.setText("");
+                        tv.setTextColor(Color.rgb(50,205,50));
+                        String str = String.valueOf(times) + "X";
+                        Double db = (double)times;
+                  //      tv.setText(String.format(Locale.CANADA, "%.2f", db) + "X");
+                    }
+                }, 1000);
+                times = 1;
+
+
+
                 anim = 0;
                 TextView textView2 = findViewById(R.id.textView3);
-                String realnum = Realnum(NumScore);
-                textView2.setText(realnum);
+                TextView textView3 = findViewById(R.id.textView6);
+                setvalue(start, NumScore);
+
 
 
                 SharedPreferences.Editor mEditor = mPrefs.edit();
@@ -294,6 +379,7 @@ public class MainActivity extends AppCompatActivity {
                     int prog =  progressBar.getProgress();
                     lv = lv -  (progressBar.getMax()-prog);
                     level++;
+
                     progressBar.setProgress(0);
                     TextView textView = findViewById(R.id.textView);
                        textView.setText(String.valueOf(level));
@@ -301,12 +387,12 @@ public class MainActivity extends AppCompatActivity {
                     coinvalue = Math.pow(2,pow);
                     progressBar.setMax((int)(50 * Math.pow(level,1.5)));
                 //    NumScore = NumScore + (float) (Math.pow(level, 2));
-                    realnum = Realnum(NumScore);
-                    textView2.setText(realnum);
+
 
 
                 }
-                progressBar.incrementProgressBy((int)lv);
+  //              progressBar.incrementProgressBy((int)lv);
+                setprog(progressBar.getProgress() + (int)lv);
 //                textView.setText(progressBar.getProgress() + "/" + progressBar.getMax());
 
                 mEditor.putInt("spins", spins).apply();
@@ -350,29 +436,16 @@ public class MainActivity extends AppCompatActivity {
         } else Toast.makeText(this, "Wait until wheel is finished", Toast.LENGTH_SHORT).show();
     }
 
-    public static String Realnum(float f1) {
-        String knum;
-        if (f1 < 999) {
-            knum = String.valueOf(f1);
+    public static String Realnum(float fl) {
+        char[] suffix = {' ', 'k', 'M', 'B', 'T', 'P', 'E'};
+        float numValue = fl;
+        int value = (int) Math.floor(Math.log10(numValue));
+        int base = value / 3;
+        if (value >= 3 && base < suffix.length) {
+            return new DecimalFormat("#0.00").format(numValue / Math.pow(10, base * 3)) + suffix[base];
         } else {
-            if (f1 < 1000000 && f1 > 999) {
-                knum =  String.valueOf((int) (f1 / 1000)) + "."  +  String.valueOf((((int) Math.floor(f1 % 10000))/100)) +  "K";
-            } else if (f1 < 1000000000 && f1 > 999999) {
-                knum =  String.valueOf((int)(f1/1000000)) + "."  +  String.valueOf((( (int)Math.floor(f1 %10000000))/100)) +  "M";
-            } else if (f1 < 1000000000000L && f1 > 999999999) {
-                knum =  String.valueOf(((int)(f1/1000000000))) +   "."  +   String.valueOf((( (int)Math.floor(f1 % 10000000000L))/100)) +  "B";
-            } else if (f1 < 1000000000000000L && f1 > 999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000L))) +   "."  +   String.valueOf( (((int)Math.floor(f1 %10000000000000L))/100)) + "T";
-            } else if (f1 < 10000000000000000L && f1 > 999999999999999L) {
-                knum = String.valueOf(((int) (f1 / 1000000000000000L))) +   "."  +   String.valueOf( (((int)Math.floor(f1 % 10000000000000000L))/100)) + "Qua";
-
-            }else knum = "error";
-
+            return new DecimalFormat("#,##0").format(numValue);
         }
-        if(knum.endsWith(".0")){
-          knum = knum.substring(0, knum.length()-2);
-        }
-        return knum;
     }
 
     public void onBackPressed() {
@@ -381,6 +454,72 @@ public class MainActivity extends AppCompatActivity {
         } else Toast.makeText(this, "Wait until wheel is finished", Toast.LENGTH_SHORT).show();
     }
 
-}
+    public void setprog (final float prog) {
+        final ProgressBar pb = findViewById(R.id.progressBar);
+        Float cprog = (float) pb.getProgress();
+        Runnable runnable = new Runnable() {
+            long num = 600;
+            int min;
+            int sec;
+
+            @Override
+            public void run() {
+                try {
+                    for (int a = 1; a < 50; a++) {
+                        Thread.sleep(10);
+                        float av = pb.getProgress() + (prog - pb.getProgress()) / (50/a);
+                        pb.setProgress((int) av);
+                    }
+                    progress = pb.getProgress();
+                    SharedPreferences.Editor mEditor = mPrefs.edit();
+                    mEditor.putInt("progress", progress).apply();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+            ;
+        };
+        Thread mthread = new Thread(runnable);
+        mthread.start();
+
+        }
+        public void setvalue (final float start, final float end){
+            final TextView two = findViewById(R.id.textView3);
+            final TextView one = findViewById(R.id.textView6);
+            long starttime = System.currentTimeMillis();
+            d = 1;
+            Handler handler1 = new Handler();
+            for (int a = 1; a<=50 ;a++) {
+                handler1.postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        float av = start + (end - start) / (50 / d);
+                        bdsa(end, start);
+//                        one.setText(Realnum(((end - start) / (50 / d))));
+                        two.setText(Realnum(av));
+
+                        d++;
+                    }
+                }, 0 * d);
+
+
+            }
+
+        }
+        public void bdsa(float end, float av){
+            final TextView two = findViewById(R.id.textView3);
+            final TextView one = findViewById(R.id.textView6);
+//            one.setText(Realnum(((end - start) / (50 / d))));
+            two.setText(Realnum(av));
+    }
+
+
+    }
+
+
 
 
