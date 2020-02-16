@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     public static double coinvalue = 1;
     public static int costsilverspeed = 1;
+    MediaPlayer mediaPlayer;
     public static float start;
     public static int costsilvernumbers = 1;
     public static int silverspeed;
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LENGTH_LONG).show();
         TextView tv = findViewById(R.id.textView7);
         tv.setTextColor(Color.rgb(50,205,50));
         String str = String.valueOf(times) + "X";
@@ -269,6 +271,50 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
+
+                if(number -wheel==1){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.one);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==2){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.two);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel ==3){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.three);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==4){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.four);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==5){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.five);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel ==6){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.six);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==7){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.seven);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==8){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.eight);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+
+
+
                 NumScore = NumScore + (float) (((number * coinvalue))*times);
                 final TextView tv = findViewById(R.id.textView7);
 
@@ -344,6 +390,49 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation arg0) {
+
+
+                if(number-wheel ==1){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.one);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel ==2){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.two);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel ==3){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.three);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==4){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.four);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel ==5){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.five);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel==6){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.six);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number -wheel==7){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.seven);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+                if(number-wheel ==8){
+                    mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.eight);
+                    mediaPlayer.setVolume(1,1);
+                    mediaPlayer.start();
+                }
+
 
                 NumScore = NumScore + (float) (((number * coinvalue))*times);
 
