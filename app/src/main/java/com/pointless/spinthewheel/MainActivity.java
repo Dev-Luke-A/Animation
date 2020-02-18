@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -77,7 +78,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mps = MediaPlayer.create(getApplicationContext(), R.raw.maintheme);
         mps.setLooping(true);
-        mps.start();
+        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+// Request audio focus for playback
+        int result = am.requestAudioFocus(new AudioManager.OnAudioFocusChangeListener() {
+                                              @Override
+                                              public void onAudioFocusChange(int i) {
+
+                                                      mps.pause();
+                                                      mps.stop();
+                                              }
+                                          },
+// Use the music stream.
+                AudioManager.STREAM_MUSIC,
+// Request permanent focus.
+                AudioManager.AUDIOFOCUS_GAIN);
+
+
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            mps.start();
+            Intent i = new Intent("com.android.music.musicservicecommand");
+            i.putExtra("command", "pause");
+            sendBroadcast(i);
+        }
+
+
+
         ////////////////////////////////////////////////////
 Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LENGTH_LONG).show();
         TextView tv = findViewById(R.id.textView7);
@@ -610,6 +636,17 @@ Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LE
             final TextView one = findViewById(R.id.textView6);
 //            one.setText(Realnum(((end - start) / (50 / d))));
             two.setText(Realnum(av));
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        mps.pause();
+        finish();
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        mps.start();
     }
 
 
