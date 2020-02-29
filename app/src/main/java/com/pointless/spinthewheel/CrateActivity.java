@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.Random;
 
+import static com.pointless.spinthewheel.MainActivity.SWITCH;
 import static com.pointless.spinthewheel.MainActivity.sc;
 
 
@@ -25,6 +26,7 @@ SharedPreferences mPrefs;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crate);
+        SWITCH = 0;
         TextView tv2 = findViewById(R.id.textView2);
         tv2.setText(String.valueOf(pcoins));
         if (v6 == (float)1.2) {
@@ -63,6 +65,7 @@ SharedPreferences mPrefs;
     }
 
     public void back3(View view) {
+        SWITCH = 1;
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

@@ -36,13 +36,14 @@ public class MainActivity extends AppCompatActivity {
     public static double coinvalue = 1;
     public static int costsilverspeed = 1;
     MediaPlayer mediaPlayer;
-    MediaPlayer mps;
+    public static MediaPlayer mps;
     public static float start;
     public static int costsilvernumbers = 1;
     public static int silverspeed;
     public static int silvernumbers;
     TextView mult;
     public static double times = 1;
+    public static int SWITCH;
     public static int d;
      TextView adder;
     public static boolean isAuto = false;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SWITCH = 0;
+//////////////////HERE///////////////////////////
         setContentView(R.layout.activity_main);
         mps = MediaPlayer.create(getApplicationContext(), R.raw.maintheme);
         mps.setLooping(true);
@@ -206,7 +209,7 @@ Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LE
         final TextView textView = findViewById(R.id.textView);
         clockwiserotate.setDuration((long)(speed/v6));
         clockwiserotate.setFillAfter(true);
-        anticlockwiserotate.setDuration(speed);
+        anticlockwiserotate.setDuration((long)(speed/v6));
         anticlockwiserotate.setFillAfter(true);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -537,6 +540,9 @@ Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LE
         if (!(anim == 1) || isAuto) {
             if (!isAuto){misAuto = false;
             }else misAuto = true;
+
+            SWITCH = 1;
+
             Intent intent = new Intent(this, Activity2.class);
             intent.putExtra(String.valueOf(speed), speed);
             intent.putExtra(String.valueOf(numbers), numbers);
@@ -548,6 +554,9 @@ Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LE
         if (!(anim == 1) || isAuto) {
             if (!isAuto){misAuto = false;
             }else misAuto = true;
+
+            SWITCH = 1;
+
             Intent intent = new Intent(this, CrateActivity.class);
             intent.putExtra(String.valueOf(speed), speed);
             intent.putExtra(String.valueOf(numbers), numbers);
@@ -557,7 +566,7 @@ Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LE
     }
 
     public static String Realnum(float fl) {
-        char[] suffix = {' ', 'k', 'M', 'B', 'T', 'P', 'E'};
+        char[] suffix = {' ', 'k', 'M', 'B', 'T', 'Q', 'P'};
         float numValue = fl;
         int value = (int) Math.floor(Math.log10(numValue));
         int base = value / 3;
@@ -639,7 +648,9 @@ Toast.makeText(getApplicationContext(), "Please turn up to max volume", Toast.LE
     @Override
     public void onPause(){
         super.onPause();
-        mps.pause();
+        if(SWITCH == 0) {
+            mps.pause();
+        }
         finish();
     }
     @Override

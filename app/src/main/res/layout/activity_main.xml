@@ -140,7 +140,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.65"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/wheel"
+        app:srcCompat="@drawable/wheelwood"
         tools:layout_editor_absoluteX="109dp"
         tools:layout_editor_absoluteY="174dp" />
 
@@ -149,7 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.05"
-        android:background="#CC9FFFFF"
+        android:background="CCAAFFFF"
         android:longClickable="true"
         android:onClick="Upgrades"
         android:text="@string/Upgrade_Btn"

@@ -15,6 +15,7 @@ import static com.pointless.spinthewheel.MainActivity.GoldCoins;
 import static com.pointless.spinthewheel.MainActivity.NumScore;
 
 import static com.pointless.spinthewheel.MainActivity.Realnum;
+import static com.pointless.spinthewheel.MainActivity.SWITCH;
 import static com.pointless.spinthewheel.MainActivity.level;
 import static com.pointless.spinthewheel.MainActivity.progress;
 import static com.pointless.spinthewheel.MainActivity.spins;
@@ -31,6 +32,7 @@ public class Activity2 extends AppCompatActivity {
     public static int silvernumbers = MainActivity.silvernumbers;
     public static int goldnums;
     double upgcost;
+
     public static float gold = MainActivity.GoldCoins;
     public static int silverspeed = MainActivity.silverspeed;
     float goldGain;
@@ -40,7 +42,7 @@ public class Activity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
-
+        SWITCH = 0;
         mPrefs = getSharedPreferences("data", Context.MODE_PRIVATE);
         Button Button1 = findViewById(R.id.button);
         wheel = mPrefs.getInt("wheel", 0);
@@ -116,6 +118,7 @@ public class Activity2 extends AppCompatActivity {
     }
 
     public void back(View view) {
+        SWITCH = 1;
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
