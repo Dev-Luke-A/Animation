@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//////////////////HERE///////////////////////////
         setContentView(R.layout.activity_main);
         mps = MediaPlayer.create(getApplicationContext(), R.raw.maintheme);
         mps.setLooping(true);
