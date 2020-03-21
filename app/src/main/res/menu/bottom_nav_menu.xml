@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
+
+    <item
+        android:id="@+id/action_recents"
+        android:enabled="true"
+
+        android:icon="@drawable/upgrade"
+        android:title="UPGRADES"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_spin"
+        android:enabled="true"
+        android:icon="@drawable/wheelicn"
+        android:title="SPIN"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_nearby"
+        android:enabled="true"
+        android:icon="@drawable/card"
+
+        android:title="CARDS"
+        app:showAsAction="ifRoom" />
+
+</menu>

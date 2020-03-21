@@ -3,9 +3,14 @@ package com.pointless.spinthewheel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,11 +27,40 @@ SharedPreferences mPrefs;
     int pcoins = MainActivity.pcoins;
     float v6 = MainActivity.v6;
     float sc = MainActivity.sc;
+    BottomNavigationView bc;
+    MediaPlayer mps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crate);
-        SWITCH = 0;
+        mps = MediaPlayer.create(getApplicationContext(), R.raw.calm);
+        mps.setLooping(true);
+        AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+// Request audio focus for playback
+        int result = am.requestAudioFocus(new AudioManager.OnAudioFocusChangeListener() {
+                                              @Override
+                                              public void onAudioFocusChange(int i) {
+
+                                                  mps.pause();
+                                                  mps.stop();
+                                              }
+                                          },
+// Use the music stream.
+                AudioManager.STREAM_MUSIC,
+// Request permanent focus.
+                AudioManager.AUDIOFOCUS_GAIN);
+
+
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            mps.start();
+            Intent i = new Intent("com.android.music.musicservicecommand");
+            i.putExtra("command", "pause");
+            sendBroadcast(i);
+        }
+
+
+
         TextView tv2 = findViewById(R.id.textView2);
         tv2.setText(String.valueOf(pcoins));
         if (v6 == (float)1.2) {
@@ -62,12 +96,5 @@ SharedPreferences mPrefs;
             TextView tv2 = findViewById(R.id.textView2);
             tv2.setText(String.valueOf(pcoins));
         }else Toast.makeText(getApplicationContext(), "Not enough coins", Toast.LENGTH_LONG).show();
-    }
-
-    public void back3(View view) {
-        SWITCH = 1;
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

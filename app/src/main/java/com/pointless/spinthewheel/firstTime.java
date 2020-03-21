@@ -20,6 +20,9 @@ public class firstTime extends AppCompatActivity {
                 "gold coins. Gold coins increasse your experience gain by 1% each! \nThat's all for now. \nEnjoy!");
     }
     public void back2 (View view){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
         finish();
+
     }
 }
