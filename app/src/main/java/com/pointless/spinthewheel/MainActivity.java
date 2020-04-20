@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedfragment = new Fraghome();
                             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                             if (selgrag == 2) {
-                                ft.setCustomAnimations(R.anim.righttoleft, R.anim.lefttoright);
+                               ft.setCustomAnimations(R.anim.righttoleft, R.anim.lefttoright);
                             }else{
                                 ft.setCustomAnimations(R.anim.righttolefte, R.anim.lefttorighte);
                             }
@@ -300,6 +300,10 @@ public static void put(float n, int l, int p, double c){
         SharedPreferences.Editor mEditor = mPrefs.edit();
         mEditor.putFloat("goldcoins", gold).apply();
         mEditor.putInt("wheel", wheel).apply();
+    }
+    public void ft(View view){
+        Intent intent = new Intent(getApplicationContext(), firstTime.class);
+        startActivity(intent);
     }
     }
 

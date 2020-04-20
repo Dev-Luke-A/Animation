@@ -4,19 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
-
     tools:context=".MainActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1.08"
         android:orientation="horizontal"
-        android:weightSum="4"
-        >
+        android:weightSum="5.12">
 
 
         <ImageView
@@ -54,6 +50,16 @@
             android:text="0"
             android:textColor="@android:color/background_dark"
             android:textSize="24sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.12"
+            android:onClick="ft"
+            android:background="@color/transparent"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/qmark" />
     </LinearLayout>
 
     <LinearLayout

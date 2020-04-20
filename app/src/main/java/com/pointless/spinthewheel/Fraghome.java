@@ -924,6 +924,8 @@ public class Fraghome extends Fragment {
 
         two.setText(Realnum(av));
     }
+
+
 }
 
 

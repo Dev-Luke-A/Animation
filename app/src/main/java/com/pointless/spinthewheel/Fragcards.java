@@ -49,18 +49,15 @@ public class Fragcards extends Fragment {
         tv2.setText(String.valueOf(MainActivity.pcoins));
       sc = MainActivity.sc;
         v6 = MainActivity.v6;
-        if (v6 == (float)1.2) {
-            ImageView iv = view.findViewById(R.id.imageView4);
-            iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.v_6_engine));
-            TextView tv = view.findViewById(R.id.textView5);
-            tv.setText("V6 ENGINE - PERMANENT 20% faster spin ");
-        }
+
 
         final ImageView iv = view.findViewById(R.id.imageView5);
        final ImageButton b1 = view.findViewById(R.id.button7);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageView iv = getView().findViewById(R.id.imageView5);
+                iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.crate1));
                 float pivotY = b1.getHeight() / 2 + 3;
                 float pivotX = b1.getWidth() / 2 + 3;
                 int clockwiseangle = 720;
@@ -88,55 +85,47 @@ public class Fragcards extends Fragment {
 
                                                              public void onAnimationEnd(Animation arg0){
                                                                  MainActivity.pcoins = MainActivity.pcoins - 1;
-                                                                 TextView tv = getView().findViewById(R.id.textView5);
-                                                                 ImageView iv = getView().findViewById(R.id.imageView4);
+                                                            //     TextView tv = getView().findViewById(R.id.textView5);
+                                                                 ImageView iv = getView().findViewById(R.id.imageView5);
 
                                                                  Random r = new Random();
-                                                                 Integer rand = r.nextInt(9);
+                                                                 Integer rand = r.nextInt(7);
 
-                                                                 if(rand == 1) {
 
-                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.v_6_engine));
-                                                                     tv.setText("V6 ENGINE - 20% FASTER SPIN");
-                                                                 }else if(rand == 0){
-
-                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.scrooge1));
-                                                                     tv.setText("SCROOGE - 20% CHEAPER SPEED UPGRADE");
-                                                                 }
-                                                                 else if(rand == 2){
+                                                                  if(rand == 2){
 
                                                                      iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.s_bank));
-                                                                     tv.setText("BANK - 10% MORE COINS");
+//                                                                     tv.setText("BANK - 10% MORE COINS");
                                                                  }
                                                                  else if(rand == 3){
 
                                                                      iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.s_hammer));
-                                                                     tv.setText("HAMMER - DOUBLE TAP EFFECTIVENESS");
+//                                                                     tv.setText("HAMMER - DOUBLE TAP EFFECTIVENESS")e;
                                                                  }
                                                                  else if(rand == 4){
 
                                                                      iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.b_bonuseveryten));
-                                                                     tv.setText("BONUS 10 - BONUS MONEY EVERY 10 SPINS");
+//                                                                     tv.setText("BONUS 10 - BONUS MONEY EVERY 10 SPINS");
                                                                  }
                                                                  else if(rand == 5){
 
                                                                      iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.b_gofaster));
-                                                                     tv.setText("GO FASTER STRIPES - 100% FASTER BUT EARN 50% COINS");
+//                                                                     tv.setText("GO FASTER STRIPES - 100% FASTER BUT EARN 50% COINS");
                                                                  }
                                                                  else if(rand == 6){
 
-                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.scrooge1));
-                                                                     tv.setText("KEY REBIND - 50% FASTER COOLDOWN");
+                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.b_keyrebind));
+//                                                                     tv.setText("KEY REBIND - 50% FASTER COOLDOWN");
                                                                  }
-                                                                 else if(rand == 7){
+                                                                 else if(rand == 1){
 
-                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.scrooge1));
-                                                                     tv.setText("CONTROLLER - SPIN JUST BY TAPPING");
+                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.b_controller));
+//                                                                     tv.setText("CONTROLLER - SPIN JUST BY TAPPING");
                                                                  }
-                                                                 else if(rand == 8){
+                                                                 else if(rand == 0){
 
-                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.scrooge1));
-                                                                     tv.setText("CLOUD - 50% SLOWER BUT TAP IS 200% MORE EFFECTIVE");
+                                                                     iv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.b_cloud));
+//                                                                     tv.setText("CLOUD - 50% SLOWER BUT TAP IS 200% MORE EFFECTIVE");
                                                                  }
                                                                  MainActivity.put2();
 

@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/mainactivitybackground"
     android:orientation="vertical"
-
     tools:context=".MainActivity">
-
 <FrameLayout
     android:id="@+id/bottom_navigationcon"
     android:layout_width="match_parent"
