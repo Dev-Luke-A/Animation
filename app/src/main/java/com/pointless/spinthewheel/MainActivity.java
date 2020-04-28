@@ -1,5 +1,6 @@
 package com.pointless.spinthewheel;
 
+import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     int first;
     int selgrag;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         progress = (mPrefs.getInt("progress", 0));
        // pcoins= (mPrefs.getInt("pcoins", 1));
         pcoins = 10;
-        wheel = mPrefs.getInt("wheel", 1);
+        wheel = mPrefs.getInt("wheel", 0);
 
 
 
@@ -213,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         NumScore = (mPrefs.getFloat("silvercoins", 0));
-        GoldCoins = (mPrefs.getFloat("goldcoins", 160));
+        GoldCoins = (mPrefs.getFloat("goldcoins", 0));
 
         silvernumbers = (mPrefs.getInt("silvernumbers", 0));
         silverspeed = (mPrefs.getInt("silverspeed", 0));
@@ -231,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+////////////////////////////TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT??///////////////////
 
     public static String Realnum(float fl) {
         char[] suffix = {' ', 'k', 'M', 'B', 'T', 'Q', 'P'};
@@ -275,7 +277,8 @@ public static void put(float n, int l, int p, double c){
 
 
 
-    SharedPreferences.Editor mEditor = mPrefs.edit();
+
+    NumScore = n;  SharedPreferences.Editor mEditor = mPrefs.edit();
     mEditor.putInt("spins", spins).apply();
     mEditor.putInt("wheel", wheel).apply();
     mEditor.putFloat("coinvalue", (float) c);
@@ -283,7 +286,6 @@ public static void put(float n, int l, int p, double c){
     mEditor.putInt("level", l).apply();
     mEditor.putInt("progress", p).apply();
 
-    NumScore = n;
     level = l;
     progress = p;
     coinvalue = c;
